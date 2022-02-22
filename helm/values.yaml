@@ -43,6 +43,7 @@ serviceAccount:
   create: true
 
 service:
+  annotations: {}
   type: ClusterIP
   clusterIP: None
 
