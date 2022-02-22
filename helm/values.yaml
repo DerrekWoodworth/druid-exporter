@@ -42,7 +42,9 @@ security:
 serviceAccount:
   create: true
 
-serviceType: ClusterIP
+service:
+  type: ClusterIP
+  clusterIP: None
 
 serviceMonitor:
   enabled: false

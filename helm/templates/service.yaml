@@ -2,6 +2,10 @@
 apiVersion: v1
 kind: Service
 metadata:
+{{- if .Values.service.annotations }}
+  annotations:
+{{ toYaml .Values.service.annotations | indent 4 }}
+{{- end }}
   labels:
     app.kubernetes.io/name: {{ include "prometheus-druid-exporter.fullname" . }}
     helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
@@ -18,4 +22,8 @@ spec:
   selector:
     app.kubernetes.io/name: {{ include "prometheus-druid-exporter.fullname" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
-  type: {{ .Values.serviceType }}
+{{- if eq .Values.service.clusterIP None }}
+   clusterIP: None
+   type: ClusterIP
+{{- end}}
+   type: {{ .Values.service.type }}
